@@ -1,0 +1,13 @@
+<section class="subscribe outer">
+  <div class="inner-sm">
+    {{ if .Site.Data.config.footer.subscribe_title }}
+    <h2 class="subscribe-title">{{ $.Site.Data.config.footer.subscribe_title }}</h2>
+    {{ end }}
+    {{ if .Site.Data.config.footer.subscribe_content }}
+    <p class="subscribe-text">
+      {{ $.Site.Data.config.footer.subscribe_content | safeHTML }}
+    </p>
+    {{ end }}
+    {{ partial "subscribe_form.html" . }}
+  </div><!-- inner-sm -->
+</section><!-- .subscribe -->

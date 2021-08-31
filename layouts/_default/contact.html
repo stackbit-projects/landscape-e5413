@@ -1,0 +1,38 @@
+{{ define "content" }}
+
+<article class="post page post-full">
+  <header class="post-header inner-md">
+    <h1 class="post-title">{{ .Params.title }}</h1>
+    {{ if .Params.subtitle }}
+    <div class="post-subtitle">
+      {{ $.Params.subtitle | safeHTML }}
+    </div><!-- .post-subtitle -->
+    {{ end }}
+  </header><!-- .post-header -->
+  {{ if .Params.img_path }}
+  <div class="post-thumbnail">
+    <img class="thumbnail" src="{{ $.Params.img_path | relURL }}" alt="{{ $.Params.img_alt }}" />
+  </div>
+  {{ end }}
+  <div class="post-content inner-md">
+
+    {{ .Content }}
+
+    <form name="{{ .Params.form_id }}" id="{{ .Params.form_id }}" {{ if .Params.form_action }} action="{{ $.Params.form_action }}" {{ end }}method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+      <div class="screen-reader-text">
+        <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+      </div>
+      <input type="hidden" name="form-name" value="{{ .Params.form_id }}" />
+      {{ range $field := .Params.form_fields }}
+        {{ $include_dict := dict "field" $field }}
+        {{ partial "form_field.html" $include_dict }}
+      {{ end }}
+      <div class="form-submit">
+        <button type="submit" class="button">{{ .Params.submit_label }}</button>
+      </div>
+    </form>
+
+  </div><!-- .post-content -->
+</article><!-- .post -->
+
+{{ end }}
